@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArinaStandardObjectNotation", "ArinaStandardObjectNotation\ArinaStandardObjectNotation.csproj", "{7DA8A36C-03BD-4F96-B123-0DFD83CFAB28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASONTest", "ASONTest\ASONTest.csproj", "{4060E9EA-334A-4601-BF90-1AEF265FADBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DA8A36C-03BD-4F96-B123-0DFD83CFAB28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DA8A36C-03BD-4F96-B123-0DFD83CFAB28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DA8A36C-03BD-4F96-B123-0DFD83CFAB28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DA8A36C-03BD-4F96-B123-0DFD83CFAB28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4060E9EA-334A-4601-BF90-1AEF265FADBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4060E9EA-334A-4601-BF90-1AEF265FADBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4060E9EA-334A-4601-BF90-1AEF265FADBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4060E9EA-334A-4601-BF90-1AEF265FADBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C56F591A-F304-472B-B04D-F97744FC530A}
+	EndGlobalSection
+EndGlobal
