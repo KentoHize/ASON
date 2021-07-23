@@ -1,17 +1,25 @@
 ﻿Arina 標準型別
 
 //Value型別
-型別名稱			 占用位元組數
+型別名稱			 占用位元組數(以後)
 ArNumberByte		 1 bytes
 ArNumberShort		 2 bytes
 ArNumberInt			 4 bytes
 ArNumberLong		 8 bytes
 ArNumberDecimal		 8 bytes
 ArNumberLongDecimal  16 bytes
+ArChar				  2 bytes
+ArNChar				 2N bytes
 
 //Reference型別
+
 ArString			 4 bytes
 ArNumber			 4 bytes
 ArObject			 4 bytes
 
+//自訂型別
+???					 固定型別 + Refererence型別 總數
+
 Arina容器型別
+List
+//Dictionary

@@ -5,7 +5,7 @@ namespace ArinaStandardObjectNotation
 {
     public class ArObject
     {
-        //prototype = arClass
+        //prototype = arType
 
         //data = ......
     }
