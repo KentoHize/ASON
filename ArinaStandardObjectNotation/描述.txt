@@ -1,4 +1,6 @@
-﻿System型
+﻿Database-Like Project
+
+System型
 
 1.Index的部分
 敘述物件的內容，涵蓋顯示的要素
@@ -20,6 +22,8 @@ STRRSSSTTRRR\0
 
 00002:
 GGHHFGGHHHDD\0
+
+根據類別開檔
 
 
 Display型
