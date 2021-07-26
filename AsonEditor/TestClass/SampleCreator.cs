@@ -15,11 +15,11 @@ namespace AsonEditor.TestClass
 
         public static List<Creature> GetSample()
         {
-            List<Person> peronList = new List<Person>();
+            List<Person> personList = new List<Person>();
             List<Creature> petList = new List<Creature>();
-
             List<Creature> result = new List<Creature>();
-            ChaosBox cb = new ChaosBox();
+
+            ChaosBox cb = new ChaosBox();            
             int rnd = cb.DrawOutByte(100);            
             while (rnd >= 10)
             {
@@ -32,6 +32,7 @@ namespace AsonEditor.TestClass
                     ((Dog)c).Breed = cb.DrawOutByte(2) == 0 ? "American Bulldog" : "Others";
                     ((Dog)c).IsOmnivores = cb.DrawOutByte(2) == 0;
                     ((Dog)c).Sleepy = cb.DrawOutByte(2) == 0;
+                    petList.Add((Pet)c);
                 }
                 else if (rnd >= 70) // Cat
                 {
@@ -40,6 +41,7 @@ namespace AsonEditor.TestClass
                     c.Gender = cb.DrawOutByte(2) == 0 ? Gender.Male : Gender.Female;
                     ((Cat)c).Breed = cb.DrawOutByte(2) == 0 ? "American Bulldog" : "Others";
                     ((Cat)c).HateDogs = cb.DrawOutByte(2) == 0;
+                    petList.Add((Pet)c);
                 }
                 else //Person
                 {
@@ -50,22 +52,16 @@ namespace AsonEditor.TestClass
                     else
                         c.Name = WizardGuild.RandomChineseMaleName();
 
-
-                    ((Person)c).Address = "(An Address)";
+                    ((Person)c).Address = "(An Address)";                    
                     rnd = cb.DrawOutByte(6);
-
-                    for(int i = 0; i < rnd; i++)
-                    {
-                        for(int j = 0; j < result.Count; j++)
-                        {
-                            if()
-                        }
-                        ((Person)c).Friends
-                    }
-                        
-
+                    if (rnd > personList.Count)
+                        rnd = personList.Count;
+                    ((Person)c).Friends = cb.DrawOutItemsFromList(personList, rnd);
                     rnd = cb.DrawOutByte(3);
-                    ((Person)c).Pets = "(An Address)";
+                    if (rnd > petList.Count)
+                        rnd = petList.Count;
+                    ((Person)c).Pets = cb.DrawOutItemsFromList(petList, rnd);
+                    personList.Add((Person)c);
 
                 }
                 c.Birthday = new DateTime(cb.DrawOutInteger(1900, 2020), cb.DrawOutInteger(1, 12), cb.DrawOutInteger(1, 29));
@@ -73,7 +69,7 @@ namespace AsonEditor.TestClass
                 result.Add(c);
                 rnd = cb.DrawOutByte(100);
             }
+            return result;
         }
-
     }
 }
