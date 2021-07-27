@@ -21,39 +21,39 @@ namespace AsonEditor.TestClass
 
             ChaosBox cb = new ChaosBox();            
             int rnd = cb.DrawOutByte(100);            
-            while (rnd >= 10)
+            while (personList.Count < 6 || petList.Count < 3 || rnd >= 10)
             {
                 Creature c;
                 if (rnd >= 85) //Dog
                 {
                     c = new Dog();
                     c.Name = "A Dog";
-                    c.Gender = cb.DrawOutByte(2) == 0 ? Gender.Male : Gender.Female;
-                    ((Dog)c).Breed = cb.DrawOutByte(2) == 0 ? "American Bulldog" : "Others";
-                    ((Dog)c).IsOmnivores = cb.DrawOutByte(2) == 0;
-                    ((Dog)c).Sleepy = cb.DrawOutByte(2) == 0;
+                    c.Gender = cb.DrawOutByte(1) == 0 ? Gender.Male : Gender.Female;
+                    ((Dog)c).Breed = cb.DrawOutByte(1) == 0 ? "American Bulldog" : "Others";
+                    ((Dog)c).IsOmnivores = cb.DrawOutByte(1) == 0;
+                    ((Dog)c).Sleepy = cb.DrawOutByte(1) == 0;
                     petList.Add((Pet)c);
                 }
                 else if (rnd >= 70) // Cat
                 {
                     c = new Cat();
                     c.Name = "A Cat";
-                    c.Gender = cb.DrawOutByte(2) == 0 ? Gender.Male : Gender.Female;
-                    ((Cat)c).Breed = cb.DrawOutByte(2) == 0 ? "American Bulldog" : "Others";
-                    ((Cat)c).HateDogs = cb.DrawOutByte(2) == 0;
+                    c.Gender = cb.DrawOutByte(1) == 0 ? Gender.Male : Gender.Female;
+                    ((Cat)c).Breed = cb.DrawOutByte(1) == 0 ? "American Bulldog" : "Others";
+                    ((Cat)c).HateDogs = cb.DrawOutByte(1) == 0;
                     petList.Add((Pet)c);
                 }
                 else //Person
                 {
                     c = new Person();
-                    c.Gender = cb.DrawOutByte(2) == 0 ? Gender.Male : Gender.Female;
+                    c.Gender = cb.DrawOutByte(1) == 0 ? Gender.Male : Gender.Female;
                     if (c.Gender == Gender.Female)
                         c.Name = WizardGuild.RandomChineseFemaleName();
                     else
                         c.Name = WizardGuild.RandomChineseMaleName();
 
                     ((Person)c).Address = "(An Address)";                    
-                    rnd = cb.DrawOutByte(6);
+                    rnd = cb.DrawOutByte(1, 6);
                     if (rnd > personList.Count)
                         rnd = personList.Count;
                     ((Person)c).Friends = cb.DrawOutItemsFromList(personList, rnd);
@@ -64,7 +64,7 @@ namespace AsonEditor.TestClass
                     personList.Add((Person)c);
 
                 }
-                c.Birthday = new DateTime(cb.DrawOutInteger(1900, 2020), cb.DrawOutInteger(1, 12), cb.DrawOutInteger(1, 29));
+                c.Birthday = cb.DrawOutDate(new DateTime(1990, 1, 1), DateTime.Now);
 
                 result.Add(c);
                 rnd = cb.DrawOutByte(100);
