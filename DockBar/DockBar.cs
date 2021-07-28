@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Design;
+using System.Drawing.Text;
+using System.Drawing.Drawing2D;
 
 namespace DockBarControl
 {
@@ -36,7 +38,14 @@ namespace DockBarControl
             foreach (Form f in Forms)
             {
                 StringFormat sf = new StringFormat(StringFormatFlags.DirectionVertical);                
-                SizeF size = e.Graphics.MeasureString(f.Text, Font, 0, sf);                
+                SizeF size = e.Graphics.MeasureString(f.Text, Font, 0, sf);
+
+                e.Graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+                e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                //e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+                //e.Graphics.CompositingMode = CompositingMode.SourceOver;
                 e.Graphics.FillRectangle(Brushes.LightGray, 0, startPosition, 7, size.Height);
                 e.Graphics.DrawString(f.Text, Font, Brushes.Black, new PointF(10, startPosition), sf);
                 startPosition += (int)size.Height;

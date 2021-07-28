@@ -83,6 +83,7 @@ namespace AsonEditor
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.panel1 = new System.Windows.Forms.Panel();
             this.dockBar1 = new DockBarControl.DockBar();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -102,7 +103,7 @@ namespace AsonEditor
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(843, 28);
+            this.menuStrip.Size = new System.Drawing.Size(843, 30);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -131,7 +132,7 @@ namespace AsonEditor
             this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
             // 
@@ -442,9 +443,9 @@ namespace AsonEditor
             this.printPreviewToolStripButton,
             this.toolStripSeparator2,
             this.helpToolStripButton});
-            this.toolStrip.Location = new System.Drawing.Point(0, 28);
+            this.toolStrip.Location = new System.Drawing.Point(0, 30);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(843, 27);
+            this.toolStrip.Size = new System.Drawing.Size(843, 31);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "ToolStrip";
             // 
@@ -532,18 +533,28 @@ namespace AsonEditor
             this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
             this.toolStripStatusLabel.Text = "Status";
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Location = new System.Drawing.Point(191, 181);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(220, 142);
+            this.panel1.TabIndex = 5;
+            // 
             // dockBar1
             // 
             this.dockBar1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dockBar1.Location = new System.Drawing.Point(0, 55);
+            this.dockBar1.Location = new System.Drawing.Point(0, 61);
+            this.dockBar1.Margin = new System.Windows.Forms.Padding(3, 1736872, 3, 1736872);
             this.dockBar1.Name = "dockBar1";
-            this.dockBar1.Size = new System.Drawing.Size(35, 477);
+            this.dockBar1.Size = new System.Drawing.Size(35, 471);
             this.dockBar1.TabIndex = 4;
             // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(843, 558);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.dockBar1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
@@ -620,6 +631,7 @@ namespace AsonEditor
         private System.Windows.Forms.ToolStripButton helpToolStripButton;
         private System.Windows.Forms.ToolTip toolTip;
         private DockBarControl.DockBar dockBar1;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
