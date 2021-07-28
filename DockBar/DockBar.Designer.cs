@@ -1,5 +1,5 @@
 ﻿
-namespace DockBar
+namespace DockBarControl
 {
     partial class DockBar
     {
