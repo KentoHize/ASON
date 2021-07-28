@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DockBar
+namespace DockBarControl
 {
     public partial class DockBar: UserControl
     {

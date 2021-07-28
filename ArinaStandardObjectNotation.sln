@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArinaStandardObjectNotation
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsonEditor", "AsonEditor\AsonEditor.csproj", "{078780B5-A156-4C1B-91EB-1A4D90B3A49E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockBar", "DockBar\DockBar.csproj", "{CBE792CF-E88B-47AF-8AE9-342811930516}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DockBarControl", "DockBar\DockBarControl.csproj", "{CBE792CF-E88B-47AF-8AE9-342811930516}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsonTest", "AsonTest\AsonTest.csproj", "{8DC88596-9300-4511-991D-993FC9CC26D5}"
 EndProject
