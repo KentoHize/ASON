@@ -30,8 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aritiafel">
+      <HintPath>..\..\Aritiafel\Aritiafel\bin\Release\netstandard2.0\Aritiafel.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +52,8 @@
     <Compile Include="DockBar.Designer.cs">
       <DependentUpon>DockBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="DockBarDesigner.cs" />
+    <Compile Include="DockBarDesignerActionList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>

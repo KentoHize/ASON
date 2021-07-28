@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace DockBarControl
 {
+    [Designer(typeof(DockBarDesigner))]
     public partial class DockBar: UserControl
     {
         public DockBar()
