@@ -17,6 +17,8 @@ namespace AsonEditor
         public MainForm()
         {
             InitializeComponent();
+            
+            //dbrLeft.FormList.Add(new TreeNodeMapForm());
         }
 
         private void ShowNewForm(object sender, EventArgs e)

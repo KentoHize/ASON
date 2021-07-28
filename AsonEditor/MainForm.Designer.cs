@@ -83,8 +83,10 @@ namespace AsonEditor
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             this.dockBar1 = new DockBarControl.DockBar();
+            this.dockBar2 = new DockBarControl.DockBar();
+            this.dockBar3 = new DockBarControl.DockBar();
+            this.dockBar4 = new DockBarControl.DockBar();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -533,29 +535,39 @@ namespace AsonEditor
             this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(484, 199);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 37);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // dockBar1
             // 
-            this.dockBar1.Location = new System.Drawing.Point(400, 125);
+            this.dockBar1.Location = new System.Drawing.Point(0, 0);
             this.dockBar1.Name = "dockBar1";
-            this.dockBar1.Size = new System.Drawing.Size(265, 142);
-            this.dockBar1.TabIndex = 11;
+            this.dockBar1.Size = new System.Drawing.Size(800, 450);
+            this.dockBar1.TabIndex = 0;
+            // 
+            // dockBar2
+            // 
+            this.dockBar2.Location = new System.Drawing.Point(0, 0);
+            this.dockBar2.Name = "dockBar2";
+            this.dockBar2.Size = new System.Drawing.Size(800, 450);
+            this.dockBar2.TabIndex = 0;
+            // 
+            // dockBar3
+            // 
+            this.dockBar3.Location = new System.Drawing.Point(0, 0);
+            this.dockBar3.Name = "dockBar3";
+            this.dockBar3.Size = new System.Drawing.Size(800, 450);
+            this.dockBar3.TabIndex = 0;
+            // 
+            // dockBar4
+            // 
+            this.dockBar4.Location = new System.Drawing.Point(0, 0);
+            this.dockBar4.Name = "dockBar4";
+            this.dockBar4.Size = new System.Drawing.Size(800, 450);
+            this.dockBar4.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(843, 558);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.dockBar1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.menuStrip);
@@ -630,7 +642,9 @@ namespace AsonEditor
         private System.Windows.Forms.ToolStripButton helpToolStripButton;
         private System.Windows.Forms.ToolTip toolTip;
         private DockBarControl.DockBar dockBar1;
-        private System.Windows.Forms.Button button1;
+        private DockBarControl.DockBar dockBar2;
+        private DockBarControl.DockBar dockBar3;
+        private DockBarControl.DockBar dockBar4;
     }
 }
 

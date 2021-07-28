@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
@@ -11,13 +12,23 @@ using Aritiafel.Characters.Heroes;
 
 namespace DockBarControl
 {
-    public class DockBarDesigner : ControlDesigner 
+    public class DockBarDesigner : ControlDesigner
     {
-        private DesignerActionListCollection dalc; 
+        private DockBar control;
+
+        private DesignerActionListCollection dalc;
 
         public override void Initialize(IComponent component)
         {
             base.Initialize(component);
+            control = component as DockBar;
+        }
+
+        public override void InitializeNewComponent(IDictionary defaultValues)
+        {
+            base.InitializeNewComponent(defaultValues);            
+            control.Dock = DockStyle.Left;
+            control.Width = 30;
         }
 
         protected override void OnMouseHover()

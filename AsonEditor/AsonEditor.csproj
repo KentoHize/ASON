@@ -91,6 +91,12 @@
     <Compile Include="TestClass\Person.cs" />
     <Compile Include="TestClass\Pet.cs" />
     <Compile Include="TestClass\SampleCreator.cs" />
+    <Compile Include="TreeNodeMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TreeNodeMapForm.Designer.cs">
+      <DependentUpon>TreeNodeMapForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,6 +109,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TreeNodeMapForm.resx">
+      <DependentUpon>TreeNodeMapForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

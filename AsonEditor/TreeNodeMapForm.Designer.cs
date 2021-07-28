@@ -1,6 +1,7 @@
-﻿namespace DockBarControl
+﻿
+namespace AsonEditor
 {
-    partial class DockBar
+    partial class TreeNodeMapForm
     {
         /// <summary>
         /// Required designer variable.
@@ -20,22 +21,24 @@
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify 
+        /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
             this.SuspendLayout();
             // 
-            // DockBar
+            // TreeNodeMapForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "DockBar";
-            this.Size = new System.Drawing.Size(800, 450);            
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Name = "TreeNodeMapForm";
+            this.Text = "TreeNodeMapForm";
             this.ResumeLayout(false);
 
         }
