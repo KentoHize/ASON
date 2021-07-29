@@ -102,7 +102,7 @@ namespace AsonEditor
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(843, 28);
+            this.menuStrip.Size = new System.Drawing.Size(843, 30);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -442,9 +442,9 @@ namespace AsonEditor
             this.printPreviewToolStripButton,
             this.toolStripSeparator2,
             this.helpToolStripButton});
-            this.toolStrip.Location = new System.Drawing.Point(0, 28);
+            this.toolStrip.Location = new System.Drawing.Point(0, 30);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(843, 27);
+            this.toolStrip.Size = new System.Drawing.Size(843, 31);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "ToolStrip";
             // 
@@ -536,11 +536,11 @@ namespace AsonEditor
             // 
             this.dockBar1.DefaultWindowWidth = 200;
             this.dockBar1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dockBar1.Location = new System.Drawing.Point(0, 55);
+            this.dockBar1.Location = new System.Drawing.Point(0, 61);
             this.dockBar1.Margin = new System.Windows.Forms.Padding(3, 1736872, 3, 1736872);
             this.dockBar1.MouseOverColor = System.Drawing.SystemColors.MenuHighlight;
             this.dockBar1.Name = "dockBar1";
-            this.dockBar1.Size = new System.Drawing.Size(35, 477);
+            this.dockBar1.Size = new System.Drawing.Size(35, 471);
             this.dockBar1.TabIndex = 4;
             // 
             // MainForm

@@ -7,12 +7,13 @@ using System.Windows.Forms;
 
 namespace DockBarControl
 {
-    public class DockTagLabel
-    {
+    public class DockBarFormInfo
+    {        
         public Form Form { get; set; }
+        public int TextWidth { get; set; }
+        public FormBorderStyle OrignialFBS { get; set; }
+        public int DefaultFormWidth { get; set; }
 
         
-
-        //public bool AutoHide { get; set; }
     }
 }
