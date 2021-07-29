@@ -20,23 +20,20 @@ namespace DockBarControl
 
         protected List<int> _TextWidths;
 
-        protected Form _CurrentForm;
-
         protected int _StartPosition;
 
         protected int _CurrentPosition;
 
-        protected int _CurrentFormIndex;
-
         protected int _MouseOverFormIndex;
-        public Form CurrentForm { get => _CurrentForm; }
-        public int CurrentFormIndex { get => _CurrentFormIndex; }
+        public Form CurrentForm { get; protected set; }
+        public int CurrentFormIndex { get; protected set; }
+        public int DefaultWindowWidth { get; set; }
 
         [DefaultValue(5)]
         public int TextInterval { get; set; }
 
         //[DefaultValue(typeof(Color), "Blue")]
-        public Color NormalColor { get; set; }
+        //public Color NormalColor { get; set; }
         public Color MouseOverColor { get; set; }
 
         [Editor(typeof(DockBarFormListEditor), typeof(UITypeEditor))]
@@ -50,19 +47,45 @@ namespace DockBarControl
             TextInterval = 5;
             _StartPosition = 5;
             _CurrentPosition = 0;
-            _CurrentFormIndex = -1;
+            CurrentForm = null;
+            CurrentFormIndex = -1;
             _MouseOverFormIndex = -1;
-            NormalColor = Color.LightGray;
-            MouseOverColor = Color.Blue;
-            _CurrentForm = null;
+            //NormalColor = SystemColors.Control;
+            MouseOverColor = SystemColors.MenuHighlight;
+            DefaultWindowWidth = 200;
         }
 
         public void AddForm(Form value)
         {
             Size size = TextRenderer.MeasureText(value.Text, Font);
             value.TextChanged += Value_TextChanged;
+            value.FormClosed += Value_FormClosed;
             _Forms.Add(value);
             _TextWidths.Add(size.Width);
+            Refresh();
+        }
+
+        public void RemoveForm(Form value)
+        {
+            int index = _Forms.IndexOf(value);
+
+            if (index != -1)
+            {
+                if (CurrentFormIndex == index)
+                {
+                    CurrentForm.Hide();
+                    CurrentFormIndex = -1;
+                    CurrentForm = null;
+                }
+                _Forms.RemoveAt(index);
+                _TextWidths.RemoveAt(index);
+            }
+            Refresh();
+        }
+
+        private void Value_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            RemoveForm(sender as Form);
         }
 
         protected void UpdateFormSize(Form f)
@@ -78,9 +101,65 @@ namespace DockBarControl
             UpdateFormSize(sender as Form);
         }
 
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            base.OnMouseClick(e);
+            if (_MouseOverFormIndex == -1)
+                return;
+            else if (CurrentFormIndex == _MouseOverFormIndex)
+            {
+                CurrentForm.Hide();
+                CurrentFormIndex = -1;
+                CurrentForm = null;
+            }
+            else
+            {
+                if (CurrentForm != null)
+                    CurrentForm.Hide();
+                CurrentFormIndex = _MouseOverFormIndex;
+                CurrentForm = _Forms[CurrentFormIndex];
+                CurrentForm.StartPosition = FormStartPosition.Manual;
+                CurrentForm.Width = DefaultWindowWidth;
+                Point p = PointToScreen(new Point(-5, 1));// NeedCheck
+                CurrentForm.Height = Height;
+                CurrentForm.Left = p.X + Width;
+                CurrentForm.Top = p.Y;
+                CurrentForm.Show(ParentForm);
+            }
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            _MouseOverFormIndex = -1;
+            base.OnMouseLeave(e);
+            Refresh();
+        }
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            int y = _StartPosition;
+            int newMouseOverFormIndex = _MouseOverFormIndex;
+            for (int i = 0; i < _TextWidths.Count; i++)
+            {
+                if (e.Y < y)
+                {
+                    newMouseOverFormIndex = -1;
+                    break;
+                }
+                y += _TextWidths[i];
+                if (e.Y < y)
+                {
+                    newMouseOverFormIndex = i;
+                    break;
+                }
+                y += TextInterval;
+            }
             base.OnMouseMove(e);
+            if (newMouseOverFormIndex != _MouseOverFormIndex)
+            {
+                _MouseOverFormIndex = newMouseOverFormIndex;
+                Refresh();
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -88,21 +167,24 @@ namespace DockBarControl
             base.OnPaint(e);
 
             int position = _StartPosition;
+            //e.Graphics.Clear(SystemColors.Control);
             for (int i = 0; i < Forms.Count; i++)
             {
                 StringFormat sf = new StringFormat(StringFormatFlags.DirectionVertical | StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
                 if (_MouseOverFormIndex == i)
                 {
-                    e.Graphics.DrawString(_Forms[i].Text, Font, new SolidBrush(ForeColor), new PointF(10, position), sf);
+                    e.Graphics.DrawString(_Forms[i].Text, Font, new SolidBrush(MouseOverColor), new PointF(10, position), sf);
                     e.Graphics.FillRectangle(new SolidBrush(MouseOverColor), 0, position, 7, _TextWidths[i]);
                 }
                 else
                 {
                     e.Graphics.DrawString(_Forms[i].Text, Font, new SolidBrush(ForeColor), new PointF(10, position), sf);
-                    e.Graphics.FillRectangle(new SolidBrush(NormalColor), 0, position, 7, _TextWidths[i]);
-                }                
+                    //e.Graphics.DrawString(_Forms[i].Text, Font, new SolidBrush(Color.Blue), new PointF(10, position), sf);
+                    e.Graphics.FillRectangle(new SolidBrush(BackColor), 0, position, 7, _TextWidths[i]);
+                }
                 position += _TextWidths[i] + TextInterval;
             }
+            //            Console.WriteLine(MouseOverColor);
 
             //TextRenderer.DrawText(e.Graphics, _Forms[i].Text, Font, new Point(0, 0), ForeColor, TextFormatFlags.PreserveGraphicsClipping);
 
