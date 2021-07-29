@@ -28,10 +28,11 @@ namespace DockBarControl
         protected bool _CurrentFormMoving { get; set; }
 
         protected Point MouseLocation { get; set; }
+
+        public Color BarColor { get; set; }
         public int DefaultWindowWidth { get; set; }
         public int WindowCaptionHeight { get; set; }
         public Color WindowCaptionBackColor { get; set; }
-
         public Color WindowCaptionForeColor { get; set; }
 
         [DefaultValue(5)]
@@ -59,6 +60,7 @@ namespace DockBarControl
             WindowCaptionHeight = 20;
             WindowCaptionBackColor = SystemColors.MenuHighlight;
             WindowCaptionForeColor = Color.White;
+            BarColor = SystemColors.ControlLight;
         }
 
         public void AddForm(Form value)
@@ -78,41 +80,13 @@ namespace DockBarControl
             dbfi.TextWidth = size.Width;
             dbfi.Form = value;
             dbfi.Float = false;
+            dbfi.DefaultFormWidth = value.Width;
+            dbfi.DefaultFormHeight = value.Height;
             _FormsInfo.Add(dbfi);
             Refresh();
         }
 
-        private void DockBarForm_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (_CurrentFormMoving)
-            {
-                (sender as Form).Left += e.X - MouseLocation.X;
-                (sender as Form).Top += e.Y - MouseLocation.Y;                
-            }
-        }
 
-        private void DockBarForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            _CurrentFormMoving = false;            
-            if (new Rectangle(0, 0, (sender as Form).Width , WindowCaptionHeight).Contains(e.X, e.Y))
-            {
-                _CurrentFormMoving = true;
-                MouseLocation = e.Location;
-            }                
-        }
-
-        private void DockBarForm_MouseUp(object sender, MouseEventArgs e)
-        {
-            _CurrentFormMoving = false;
-            MouseLocation = Point.Empty;
-        }
-
-        private void DockBarForm_Paint(object sender, PaintEventArgs e)
-        {
-            int index = IndexOfForm(sender as Form);            
-            e.Graphics.FillRectangle(new SolidBrush(WindowCaptionBackColor), 0, 0, (sender as Form).Width, WindowCaptionHeight);
-            e.Graphics.DrawString(_FormsInfo[index].Form.Text, Font, new SolidBrush(WindowCaptionForeColor), new Point(3, 0));
-        }
 
         protected int IndexOfForm(Form value)
         {
@@ -165,6 +139,39 @@ namespace DockBarControl
             UpdateFormSize(sender as Form);
         }
 
+        private void DockBarForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_CurrentFormMoving)
+            {
+                (sender as Form).Left += e.X - MouseLocation.X;
+                (sender as Form).Top += e.Y - MouseLocation.Y;
+            }
+        }
+
+        private void DockBarForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            _CurrentFormMoving = false;
+            if (new Rectangle(0, 0, (sender as Form).Width, WindowCaptionHeight).Contains(e.X, e.Y))
+            {
+                _CurrentFormMoving = true;
+                MouseLocation = e.Location;
+            }
+        }
+
+        private void DockBarForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            _CurrentFormMoving = false;
+            MouseLocation = Point.Empty;
+        }
+
+        private void DockBarForm_Paint(object sender, PaintEventArgs e)
+        {
+            int index = IndexOfForm(sender as Form);
+            e.Graphics.FillRectangle(new SolidBrush(WindowCaptionBackColor), 0, 0, (sender as Form).Width, WindowCaptionHeight);
+            e.Graphics.DrawString(_FormsInfo[index].Form.Text, Font, new SolidBrush(WindowCaptionForeColor), new Point(3, 0));
+            e.Graphics.DrawRectangle(new Pen(BarColor), 0, 0, (sender as Form).Width - 1, (sender as Form).Height - 1);
+        }
+
         protected override void OnMouseClick(MouseEventArgs e)
         {
             base.OnMouseClick(e);
@@ -181,11 +188,10 @@ namespace DockBarControl
                 if (CurrentForm != null)
                     CurrentForm.Hide();
                 CurrentFormIndex = _MouseOverFormIndex;
-                CurrentForm = _FormsInfo[CurrentFormIndex].Form;                
+                CurrentForm = _FormsInfo[CurrentFormIndex].Form;
                 CurrentForm.StartPosition = FormStartPosition.Manual;
                 CurrentForm.Width = DefaultWindowWidth;
-                //Point p = PointToScreen(new Point(-5, 1));// NeedCheck
-                Point p = PointToScreen(new Point(0, 0));// NeedCheck
+                Point p = PointToScreen(new Point(0, 0));
                 CurrentForm.Height = Height;
                 CurrentForm.Left = p.X + Width;
                 CurrentForm.Top = p.Y;
@@ -233,40 +239,40 @@ namespace DockBarControl
             base.OnPaint(e);
 
             int position = _StartPosition;
-            //e.Graphics.Clear(SystemColors.Control);
             for (int i = 0; i < _FormsInfo.Count; i++)
             {
-                StringFormat sf = new StringFormat(StringFormatFlags.DirectionVertical | StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
-                if (_MouseOverFormIndex == i)
+                StringFormat sf;
+                if (Dock == DockStyle.Left || Dock == DockStyle.Right)
                 {
-                    e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(MouseOverColor), new PointF(10, position), sf);
-                    e.Graphics.FillRectangle(new SolidBrush(MouseOverColor), 0, position, 7, _FormsInfo[i].TextWidth);
+                    sf = new StringFormat(StringFormatFlags.DirectionVertical | StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
+                    if (_MouseOverFormIndex == i)
+                    {
+                        e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(MouseOverColor), new PointF(10, position), sf);
+                        e.Graphics.FillRectangle(new SolidBrush(MouseOverColor), 0, position, 7, _FormsInfo[i].TextWidth);
+                    }
+                    else
+                    {
+                        e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(ForeColor), new PointF(10, position), sf);
+                        e.Graphics.FillRectangle(new SolidBrush(BarColor), 0, position, 7, _FormsInfo[i].TextWidth);
+                        //e.Graphics.DrawString(_Forms[i].Text, Font, new SolidBrush(Color.Blue), new PointF(10, position), sf);
+                    }
                 }
                 else
                 {
-                    e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(ForeColor), new PointF(10, position), sf);
-                    //e.Graphics.DrawString(_Forms[i].Text, Font, new SolidBrush(Color.Blue), new PointF(10, position), sf);
-                    e.Graphics.FillRectangle(new SolidBrush(BackColor), 0, position, 7, _FormsInfo[i].TextWidth);
+                    sf = new StringFormat(StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
+                    if (_MouseOverFormIndex == i)
+                    {
+                        e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(MouseOverColor), new PointF(position, 5), sf);
+                        e.Graphics.FillRectangle(new SolidBrush(MouseOverColor), position, Font.Height + 10, _FormsInfo[i].TextWidth, 7);
+                    }
+                    else
+                    {
+                        e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(ForeColor), new PointF(position, 5), sf);
+                        e.Graphics.FillRectangle(new SolidBrush(BarColor), position, Font.Height + 10, _FormsInfo[i].TextWidth, 7);                        
+                    }
                 }
                 position += _FormsInfo[i].TextWidth + TextInterval;
             }
-            //            Console.WriteLine(MouseOverColor);
-
-            //TextRenderer.DrawText(e.Graphics, _Forms[i].Text, Font, new Point(0, 0), ForeColor, TextFormatFlags.PreserveGraphicsClipping);
-
-            //StringFormat sf = new StringFormat(StringFormatFlags.DirectionVertical);                
-            //SizeF size = e.Graphics.MeasureString(f.Text, Font, 0, sf);
-
-            //e.Graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-            //e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-            //e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            //e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-            ////e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
-            ////e.Graphics.CompositingMode = CompositingMode.SourceOver;
-            //e.Graphics.FillRectangle(Brushes.LightGray, 0, startPosition, 7, size.Height);
-            //e.Graphics.DrawString(f.Text, Font, Brushes.Black, new PointF(10, startPosition), sf);
-            //startPosition += (int)size.Height;
-            //startPosition += 10;
 
 
         }

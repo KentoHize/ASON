@@ -34,7 +34,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Name = "DockBar";
-            this.Size = new System.Drawing.Size(800, 450);
+            this.Size = new System.Drawing.Size(98, 817);
             this.ResumeLayout(false);
 
         }

@@ -27,31 +27,21 @@ namespace DockBarControl
         public override void InitializeNewComponent(IDictionary defaultValues)
         {
             base.InitializeNewComponent(defaultValues);            
-            control.Dock = DockStyle.Left;
+            control.Dock = DockStyle.Left;            
             control.Width = 30;
         }
 
-        protected override void OnMouseHover()
-        {
-            base.OnMouseHover();
-        }
-
-        protected override void OnDragDrop(DragEventArgs de)
-        {
-            base.OnDragDrop(de);
-        }
-
-        public override DesignerActionListCollection ActionLists
-        {
-            get
-            {
-                if (dalc == null)
-                {
-                    dalc = new DesignerActionListCollection();
-                    dalc.Add(new DockBarDesignerActionList(Component));
-                }
-                return dalc;
-            }
-        }
+        //public override DesignerActionListCollection ActionLists
+        //{
+        //    get
+        //    {
+        //        if (dalc == null)
+        //        {
+        //            dalc = new DesignerActionListCollection();
+        //            dalc.Add(new DockBarDesignerActionList(Component));
+        //        }
+        //        return dalc;
+        //    }
+        //}
     }
 }
