@@ -327,7 +327,7 @@ namespace AsonEditor
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // windowsMenu
@@ -537,11 +537,11 @@ namespace AsonEditor
             // 
             this.dockBar1.BarColor = System.Drawing.SystemColors.ControlLight;
             this.dockBar1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dockBar1.Location = new System.Drawing.Point(725, 55);
+            this.dockBar1.Location = new System.Drawing.Point(798, 55);
             this.dockBar1.Margin = new System.Windows.Forms.Padding(3, 1736872, 3, 1736872);
             this.dockBar1.MouseOverColor = System.Drawing.SystemColors.MenuHighlight;
             this.dockBar1.Name = "dockBar1";
-            this.dockBar1.Size = new System.Drawing.Size(118, 477);
+            this.dockBar1.Size = new System.Drawing.Size(45, 477);
             this.dockBar1.TabIndex = 4;
             this.dockBar1.WindowCaptionBackColor = System.Drawing.SystemColors.MenuHighlight;
             this.dockBar1.WindowCaptionForeColor = System.Drawing.Color.White;

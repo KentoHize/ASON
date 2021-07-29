@@ -14,6 +14,5 @@ namespace DockBarControl
         public FormBorderStyle OrignialFBS { get; set; }
         public int DefaultFormWidth { get; set; }
         public int DefaultFormHeight { get; set; }
-        public bool Float { get; set; }
     }
 }
