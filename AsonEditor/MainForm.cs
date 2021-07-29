@@ -107,5 +107,30 @@ namespace AsonEditor
                 childForm.Close();
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            switch (dockBar1.Dock)
+            {
+                case DockStyle.Left:
+                    dockBar1.Dock = DockStyle.Top;
+                    dockBar1.Height = 30;                    
+                    break;
+                case DockStyle.Top:
+                    dockBar1.Dock = DockStyle.Right;
+                    dockBar1.Width = 30;
+                    break;
+                case DockStyle.Right:
+                    dockBar1.Dock = DockStyle.Bottom;
+                    dockBar1.Height = 30;
+                    break;
+                case DockStyle.Bottom:
+                    dockBar1.Dock = DockStyle.Left;
+                    dockBar1.Width = 30;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
