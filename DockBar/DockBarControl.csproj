@@ -55,6 +55,7 @@
     <Compile Include="DockBarDesigner.cs" />
     <Compile Include="DockBarDesignerActionList.cs" />
     <Compile Include="DockBarFormListEditor.cs" />
+    <Compile Include="DockTagLabel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>

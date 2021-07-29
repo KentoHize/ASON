@@ -17,8 +17,8 @@ namespace AsonEditor
         public MainForm()
         {
             InitializeComponent();
-            dockBar1.AddForm(new TreeNodeMapForm { Text = "TreeNodeMap" });
-            dockBar1.AddForm(new TreeNodeMapForm { Text = "ServerExplorer" });
+            dockBar1.AddForm(new TreeNodeMapForm { Text = "Treenode Map" });
+            dockBar1.AddForm(new TreeNodeMapForm { Text = "Server Explorer" });
             //dbrLeft.Forms
             //    .Add(new TreeNodeMapForm());
         }
