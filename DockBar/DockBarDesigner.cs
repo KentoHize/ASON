@@ -26,7 +26,7 @@ namespace DockBarControl
 
         public override void InitializeNewComponent(IDictionary defaultValues)
         {
-            base.InitializeNewComponent(defaultValues);            
+            base.InitializeNewComponent(defaultValues);
             control.Dock = DockStyle.Left;            
             control.Width = 30;
         }

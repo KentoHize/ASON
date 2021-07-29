@@ -26,24 +26,21 @@ namespace DockBarControl
         public Form CurrentForm { get; protected set; }
         public int CurrentFormIndex { get; protected set; }
         protected bool _CurrentFormMoving { get; set; }
-
+        protected bool _CurrentFormFloat { get; set; }
         protected Point MouseLocation { get; set; }
         public Color BarColor { get; set; }
         public int WindowCaptionHeight { get; set; }
         public Color WindowCaptionBackColor { get; set; }
         public Color WindowCaptionForeColor { get; set; }
 
-        
+
 
         [DefaultValue(5)]
         public int TextInterval { get; set; }
-
-        //[DefaultValue(typeof(Color), "Blue")]
-        //public Color NormalColor { get; set; }
         public Color MouseOverColor { get; set; }
 
         //[Editor(typeof(DockBarFormListEditor), typeof(UITypeEditor))]
-        //public IReadOnlyList<Form> Forms { get => _FormsInfo.AsReadOnly(); }
+        public IReadOnlyList<Form> Forms { get => _FormsInfo.Select(m => m.Form).ToList().AsReadOnly(); }
 
         public DockBar()
         {
@@ -60,6 +57,18 @@ namespace DockBarControl
             WindowCaptionBackColor = SystemColors.MenuHighlight;
             WindowCaptionForeColor = Color.White;
             BarColor = SystemColors.ControlLight;
+        }
+
+        protected override void OnCreateControl()
+        {
+            base.CreateControl();
+            ParentForm.Resize += ParentForm_Resize;
+        }
+
+        private void ParentForm_Resize(object sender, EventArgs e)
+        {
+            if (CurrentForm != null)
+                SetFormPostionAndSize(true);
         }
 
         public void AddForm(Form value)
@@ -84,9 +93,6 @@ namespace DockBarControl
             _FormsInfo.Add(dbfi);
             Refresh();
         }
-
-
-
         protected int IndexOfForm(Form value)
         {
             for (int i = 0; i < _FormsInfo.Count; i++)
@@ -101,11 +107,7 @@ namespace DockBarControl
             if (index != -1)
             {
                 if (CurrentFormIndex == index)
-                {
-                    CurrentForm.Hide();
-                    CurrentFormIndex = -1;
-                    CurrentForm = null;
-                }
+                    HideForm();
                 _FormsInfo[index].Form.TextChanged -= DockBarForm_TextChanged;
                 _FormsInfo[index].Form.FormClosed -= DockBarForm_FormClosed;
                 _FormsInfo[index].Form.Paint -= DockBarForm_Paint;
@@ -129,7 +131,8 @@ namespace DockBarControl
         {
             base.OnDockChanged(e);
             if (Dock == DockStyle.Fill || Dock == DockStyle.None)
-                throw new ArgumentOutOfRangeException(nameof(Dock));
+                throw new ArgumentOutOfRangeException(nameof(Dock));            
+            HideForm();
             Refresh();
         }
 
@@ -148,6 +151,8 @@ namespace DockBarControl
 
         protected void DockBarForm_MouseMove(object sender, MouseEventArgs e)
         {
+            if (!_CurrentFormFloat)
+                return;
             if (_CurrentFormMoving)
             {
                 (sender as Form).Left += e.X - MouseLocation.X;
@@ -157,6 +162,8 @@ namespace DockBarControl
 
         protected void DockBarForm_MouseDown(object sender, MouseEventArgs e)
         {
+            if (!_CurrentFormFloat)
+                return;
             _CurrentFormMoving = false;
             if (new Rectangle(0, 0, (sender as Form).Width, WindowCaptionHeight).Contains(e.X, e.Y))
             {
@@ -166,7 +173,7 @@ namespace DockBarControl
         }
 
         protected void DockBarForm_MouseUp(object sender, MouseEventArgs e)
-        {
+        {   
             _CurrentFormMoving = false;
             MouseLocation = Point.Empty;
         }
@@ -185,51 +192,68 @@ namespace DockBarControl
             if (_MouseOverFormIndex == -1)
                 return;
             else if (CurrentFormIndex == _MouseOverFormIndex)
-            {
-                CurrentForm.Hide();
-                CurrentFormIndex = -1;
-                CurrentForm = null;
-            }
+                HideForm();
             else
-            {
-                if (CurrentForm != null)
-                    CurrentForm.Hide();
-                CurrentFormIndex = _MouseOverFormIndex;
-                CurrentForm = _FormsInfo[CurrentFormIndex].Form;
-                CurrentForm.StartPosition = FormStartPosition.Manual;
-                _CurrentFormMoving = false;
-                Point p = PointToScreen(new Point(0, 0));
-                switch (Dock)
-                {
-                    case DockStyle.Left:
-                        CurrentForm.Width = _FormsInfo[CurrentFormIndex].DefaultFormWidth;                        
-                        CurrentForm.Height = Height;                        
-                        CurrentForm.Left = p.X + Width;
-                        CurrentForm.Top = p.Y;
-                        break;
-                    case DockStyle.Bottom:
-                        CurrentForm.Width = Width;                        
-                        CurrentForm.Height = _FormsInfo[CurrentFormIndex].DefaultFormHeight;                        
-                        CurrentForm.Left = p.X;
-                        CurrentForm.Top = p.Y - CurrentForm.Height;
-                        break;
-                    case DockStyle.Right:
-                        CurrentForm.Width = _FormsInfo[CurrentFormIndex].DefaultFormWidth;
-                        CurrentForm.Height = Height;
-                        CurrentForm.Left = p.X - CurrentForm.Width;
-                        CurrentForm.Top = p.Y;
-                        break;
-                    case DockStyle.Top:
-                        CurrentForm.Width = Width;
-                        CurrentForm.Height = _FormsInfo[CurrentFormIndex].DefaultFormHeight;
-                        CurrentForm.Left = p.X;
-                        CurrentForm.Top = p.Y + Height;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(Dock));
-                }                
-                CurrentForm.Show(ParentForm);
+            {   
+                HideForm();
+                ShowForm(_MouseOverFormIndex);
             }
+        }
+
+        protected void ShowForm(int index)
+        {
+            CurrentFormIndex = index;
+            CurrentForm = _FormsInfo[CurrentFormIndex].Form;
+            CurrentForm.StartPosition = FormStartPosition.Manual;
+            _CurrentFormFloat = _FormsInfo[CurrentFormIndex].Float;
+            SetFormPostionAndSize();
+            CurrentForm.Show(ParentForm);
+        }
+
+        protected void SetFormPostionAndSize(bool refresh = false)
+        {
+            _CurrentFormMoving = false;            
+            Point p = PointToScreen(new Point(0, 0));
+            switch (Dock)
+            {
+                case DockStyle.Left:
+                    CurrentForm.Width = _FormsInfo[CurrentFormIndex].DefaultFormWidth;
+                    CurrentForm.Height = Height;
+                    CurrentForm.Left = p.X + Width;
+                    CurrentForm.Top = p.Y;
+                    break;
+                case DockStyle.Bottom:
+                    CurrentForm.Width = Width;
+                    CurrentForm.Height = _FormsInfo[CurrentFormIndex].DefaultFormHeight;
+                    CurrentForm.Left = p.X;
+                    CurrentForm.Top = p.Y - CurrentForm.Height;
+                    break;
+                case DockStyle.Right:
+                    CurrentForm.Width = _FormsInfo[CurrentFormIndex].DefaultFormWidth;
+                    CurrentForm.Height = Height;
+                    CurrentForm.Left = p.X - CurrentForm.Width;
+                    CurrentForm.Top = p.Y;
+                    break;
+                case DockStyle.Top:
+                    CurrentForm.Width = Width;
+                    CurrentForm.Height = _FormsInfo[CurrentFormIndex].DefaultFormHeight;
+                    CurrentForm.Left = p.X;
+                    CurrentForm.Top = p.Y + Height;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Dock));
+            }
+            if (refresh)
+                Refresh();
+        }
+
+        protected void HideForm()
+        {
+            if (CurrentForm == null)
+                return;
+            CurrentForm.Hide();
+            CurrentFormIndex = -1;
+            CurrentForm = null;
         }
 
         protected override void OnMouseLeave(EventArgs e)
@@ -286,10 +310,10 @@ namespace DockBarControl
                 if (Dock == DockStyle.Left || Dock == DockStyle.Right)
                 {
                     sf = new StringFormat(StringFormatFlags.DirectionVertical | StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
-                    if(Dock == DockStyle.Left)
+                    if (Dock == DockStyle.Left)
                     {
                         e.Graphics.FillRectangle(new SolidBrush(barColor), 0, position, 7, _FormsInfo[i].TextWidth);
-                        e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(foreColor), new PointF(10, position), sf);                        
+                        e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(foreColor), new PointF(10, position), sf);
                     }
                     else
                     {
@@ -302,10 +326,10 @@ namespace DockBarControl
                     sf = new StringFormat(StringFormatFlags.NoClip | StringFormatFlags.NoWrap);
                     if (Dock == DockStyle.Top)
                     {
-                        e.Graphics.FillRectangle(new SolidBrush(barColor), position, 0 , _FormsInfo[i].TextWidth, 7);
-                        e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(foreColor), new PointF(position, 10), sf);                        
+                        e.Graphics.FillRectangle(new SolidBrush(barColor), position, 0, _FormsInfo[i].TextWidth, 7);
+                        e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(foreColor), new PointF(position, 10), sf);
                     }
-                    else 
+                    else
                     {
                         e.Graphics.DrawString(_FormsInfo[i].Form.Text, Font, new SolidBrush(foreColor), new PointF(position, 0), sf);
                         e.Graphics.FillRectangle(new SolidBrush(barColor), position, Font.Height + 5, _FormsInfo[i].TextWidth, 7);
