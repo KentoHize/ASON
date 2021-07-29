@@ -28,9 +28,9 @@ namespace DockBarControl
         public Form CurrentForm { get; protected set; }
         public int CurrentFormIndex { get; protected set; }
         protected bool _FormMoving { get; set; }    
-        protected ResizeDirection _FormResizing { get; set; }    
-        protected bool _CurrentFormFloat { get; set; }
+        protected ResizeDirection _FormResizing { get; set; }            
         protected Point MouseLocation { get; set; }
+        //protected Size OriginalFormSize { get; set; }
         public Color BarColor { get; set; }
         public int WindowCaptionHeight { get; set; }
         public Color WindowCaptionBackColor { get; set; }
@@ -82,11 +82,29 @@ namespace DockBarControl
             value.MouseDown += DockBarForm_MouseDown;
             value.MouseMove += DockBarForm_MouseMove;
             value.MouseUp += DockBarForm_MouseUp;
-            value.MaximizeBox = false;// MaximizeBox false:Dock, true:Float
+            value.MaximizeBox = true;// MaximizeBox false:Dock, true:Float
             dbfi.OrignialFBS = value.FormBorderStyle;
             value.FormBorderStyle = FormBorderStyle.None;
+            
+
+            
+
             foreach (Control c in value.Controls)
                 c.Top += WindowCaptionHeight;
+
+            Button cb = new Button();
+            Button hb = new Button();
+            Button fb = new Button();
+            fb.Width = 16;
+            fb.Height = 16;
+            fb.Left = value.Width - 30;
+            fb.Top = 2;
+            fb.BackColor = WindowCaptionBackColor;
+            fb.FlatStyle = FlatStyle.Flat;
+            fb.FlatAppearance.BorderSize = 0;
+            fb.Text = "f";
+            fb.Click += FloatButton_Click;
+            value.Controls.Add(fb);
             dbfi.TextWidth = size.Width;
             dbfi.Form = value;            
             dbfi.DefaultFormWidth = value.Width;
@@ -94,6 +112,21 @@ namespace DockBarControl
             _FormsInfo.Add(dbfi);
             Refresh();
         }
+
+        private void FloatButton_Click(object sender, EventArgs e)
+        {
+            Form f = (sender as Button).Parent as Form;
+            if (f.MaximizeBox)
+            {
+                f.MaximizeBox = false;                
+                //SetFormPostionAndSize(true)
+            }
+            else
+            {
+                f.MaximizeBox = true;
+            }   
+        }
+
         protected int IndexOfForm(Form value)
         {
             for (int i = 0; i < _FormsInfo.Count; i++)
@@ -194,10 +227,48 @@ namespace DockBarControl
         protected void DockBarForm_MouseMove(object sender, MouseEventArgs e)
         {
             Form f = sender as Form;
+            if (_FormMoving)
+            {
+                f.Left += e.X - MouseLocation.X;
+                f.Top += e.Y - MouseLocation.Y;
+                return;
+            }
+            else if (_FormResizing != ResizeDirection.None)
+            {   
+                switch(_FormResizing)
+                {
+                    case ResizeDirection.Left:
+                        f.Left += e.X - MouseLocation.X;
+                        f.Width -= e.X - MouseLocation.X;                        
+                        break;
+                    case ResizeDirection.Top:
+                        f.Top += e.Y - MouseLocation.Y;
+                        f.Height -= e.Y - MouseLocation.Y;
+                        break;
+                }
+                //f.Refresh();
+                return;
+            }
+            
+            ResizeDirection rd = ResizeDirection.None;
+            if (f.MaximizeBox)
+                rd = GetResizeDirection(f, e.Location);
+            else if (Dock == DockStyle.Left)
+                rd = GetResizeDirection(f, e.Location, ResizeDirection.Right);
+            else if (Dock == DockStyle.Top)
+                rd = GetResizeDirection(f, e.Location, ResizeDirection.Bottom);
+            else if (Dock == DockStyle.Right)
+                rd = GetResizeDirection(f, e.Location, ResizeDirection.Left);
+            else if (Dock == DockStyle.Bottom)
+                rd = GetResizeDirection(f, e.Location, ResizeDirection.Top);            
+            f.Cursor = rd.GetResizeCursor();
+        }
 
-
-            ResizeDirection rd;
-
+        protected void DockBarForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            _FormMoving = false;
+            Form f = sender as Form;
+            ResizeDirection rd = ResizeDirection.None;
             if (f.MaximizeBox)
                 rd = GetResizeDirection(f, e.Location);
             else if (Dock == DockStyle.Left)
@@ -208,45 +279,15 @@ namespace DockBarControl
                 rd = GetResizeDirection(f, e.Location, ResizeDirection.Left);
             else if (Dock == DockStyle.Bottom)
                 rd = GetResizeDirection(f, e.Location, ResizeDirection.Top);
-            else
-                throw new ArgumentOutOfRangeException(nameof(Dock));
-            f.Cursor = rd.GetResizeCursor();
-            
-            //switch (Dock)
-            //{
-            //    case DockStyle.Left:
-            //        f.Left + f.Width = e.X
-            //        break;
-            //    case DockStyle.Top:
 
-            //        break;
-            //    case DockStyle.Right:
-
-            //        break;
-            //    case DockStyle.Bottom:
-
-            //        break;
-            //}
-
-            if (!_CurrentFormFloat)
-                return;
-            if (_FormMoving)
+            if (rd != ResizeDirection.None)
             {
-                f.Left += e.X - MouseLocation.X;
-                f.Top += e.Y - MouseLocation.Y;
-            }
-        }
-
-        protected void DockBarForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            Form f = sender as Form;
-            ResizeDirection rd = GetResizeDirection(f, e.Location);
-            
-            
-            if (!_CurrentFormFloat)
+                _FormResizing = rd;
+                MouseLocation = e.Location;
                 return;
-            _FormMoving = false;
-            if (new Rectangle(0, 0, f.Width, WindowCaptionHeight).Contains(e.X, e.Y))
+            }
+
+            if (e.X >= 0 && e.Y >= 0 && e.X < f.Width && e.Y <= WindowCaptionHeight)
             {
                 _FormMoving = true;
                 MouseLocation = e.Location;
@@ -264,7 +305,7 @@ namespace DockBarControl
         protected void DockBarForm_Paint(object sender, PaintEventArgs e)
         {
             int index = IndexOfForm(sender as Form);
-            e.Graphics.DrawRectangle(new Pen(BarColor), 0, 0, (sender as Form).Width - 1, (sender as Form).Height - 1);
+            //e.Graphics.DrawRectangle(new Pen(BarColor), 0, 0, (sender as Form).Width - 1, (sender as Form).Height - 1);
             e.Graphics.FillRectangle(new SolidBrush(WindowCaptionBackColor), 0, 0, (sender as Form).Width, WindowCaptionHeight);
             e.Graphics.DrawString(_FormsInfo[index].Form.Text, Font, new SolidBrush(WindowCaptionForeColor), new Point(3, 0));
         }
@@ -288,8 +329,6 @@ namespace DockBarControl
             CurrentFormIndex = index;
             CurrentForm = _FormsInfo[CurrentFormIndex].Form;
             CurrentForm.StartPosition = FormStartPosition.Manual;
-            //_CurrentFormFloat = _FormsInfo[CurrentFormIndex].Form.MaximizeBox;
-            _CurrentFormFloat = true;
             SetFormPostionAndSize();
             CurrentForm.Show(ParentForm);
         }
