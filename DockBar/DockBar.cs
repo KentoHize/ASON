@@ -25,11 +25,14 @@ namespace DockBarControl
         protected int _MouseOverFormIndex;
         public Form CurrentForm { get; protected set; }
         public int CurrentFormIndex { get; protected set; }
+        protected bool _CurrentFormMoving { get; set; }
+
+        protected Point MouseLocation { get; set; }
         public int DefaultWindowWidth { get; set; }
-
         public int WindowCaptionHeight { get; set; }
+        public Color WindowCaptionBackColor { get; set; }
 
-        public Color WindowCaptionColor { get; set; }
+        public Color WindowCaptionForeColor { get; set; }
 
         [DefaultValue(5)]
         public int TextInterval { get; set; }
@@ -54,30 +57,61 @@ namespace DockBarControl
             MouseOverColor = SystemColors.MenuHighlight;
             DefaultWindowWidth = 200;
             WindowCaptionHeight = 20;
-            WindowCaptionColor = SystemColors.MenuHighlight;
-            Left = 0;
+            WindowCaptionBackColor = SystemColors.MenuHighlight;
+            WindowCaptionForeColor = Color.White;
         }
 
         public void AddForm(Form value)
         {
             DockBarFormInfo dbfi = new DockBarFormInfo();
             Size size = TextRenderer.MeasureText(value.Text, Font);
-            value.TextChanged += Value_TextChanged;
-            value.FormClosed += Value_FormClosed;
-            value.Paint += Value_Paint;
+            value.TextChanged += DockBarForm_TextChanged;
+            value.FormClosed += DockBarForm_FormClosed;
+            value.Paint += DockBarForm_Paint;
+            value.MouseDown += DockBarForm_MouseDown;
+            value.MouseMove += DockBarForm_MouseMove;
+            value.MouseUp += DockBarForm_MouseUp;
             dbfi.OrignialFBS = value.FormBorderStyle;
             value.FormBorderStyle = FormBorderStyle.None;
             foreach (Control c in value.Controls)
                 c.Top += WindowCaptionHeight;
             dbfi.TextWidth = size.Width;
             dbfi.Form = value;
+            dbfi.Float = false;
             _FormsInfo.Add(dbfi);
             Refresh();
         }
 
-        private void Value_Paint(object sender, PaintEventArgs e)
+        private void DockBarForm_MouseMove(object sender, MouseEventArgs e)
         {
-            e.Graphics.FillRectangle(new SolidBrush(WindowCaptionColor), 0, 0, DefaultWindowWidth, WindowCaptionHeight);
+            if (_CurrentFormMoving)
+            {
+                (sender as Form).Left += e.X - MouseLocation.X;
+                (sender as Form).Top += e.Y - MouseLocation.Y;                
+            }
+        }
+
+        private void DockBarForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            _CurrentFormMoving = false;            
+            if (new Rectangle(0, 0, (sender as Form).Width , WindowCaptionHeight).Contains(e.X, e.Y))
+            {
+                _CurrentFormMoving = true;
+                MouseLocation = e.Location;
+            }                
+        }
+
+        private void DockBarForm_MouseUp(object sender, MouseEventArgs e)
+        {
+            _CurrentFormMoving = false;
+            MouseLocation = Point.Empty;
+        }
+
+        private void DockBarForm_Paint(object sender, PaintEventArgs e)
+        {
+            int index = IndexOfForm(sender as Form);            
+            e.Graphics.FillRectangle(new SolidBrush(WindowCaptionBackColor), 0, 0, (sender as Form).Width, WindowCaptionHeight);
+            e.Graphics.DrawString(_FormsInfo[index].Form.Text, Font, new SolidBrush(WindowCaptionForeColor), new Point(3, 0));
         }
 
         protected int IndexOfForm(Form value)
@@ -99,9 +133,12 @@ namespace DockBarControl
                     CurrentFormIndex = -1;
                     CurrentForm = null;
                 }
-                _FormsInfo[index].Form.TextChanged -= Value_TextChanged;
-                _FormsInfo[index].Form.FormClosed -= Value_FormClosed;
-                _FormsInfo[index].Form.Paint -= Value_Paint;
+                _FormsInfo[index].Form.TextChanged -= DockBarForm_TextChanged;
+                _FormsInfo[index].Form.FormClosed -= DockBarForm_FormClosed;
+                _FormsInfo[index].Form.Paint -= DockBarForm_Paint;
+                _FormsInfo[index].Form.MouseDown -= DockBarForm_MouseDown;
+                _FormsInfo[index].Form.MouseMove -= DockBarForm_MouseMove;
+                _FormsInfo[index].Form.MouseUp -= DockBarForm_MouseUp;
                 _FormsInfo[index].Form.FormBorderStyle = _FormsInfo[index].OrignialFBS;
                 foreach (Control c in _FormsInfo[index].Form.Controls)
                     c.Top -= WindowCaptionHeight;
@@ -110,7 +147,7 @@ namespace DockBarControl
             Refresh();
         }
 
-        private void Value_FormClosed(object sender, FormClosedEventArgs e)
+        private void DockBarForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             RemoveForm(sender as Form);
         }
@@ -123,11 +160,10 @@ namespace DockBarControl
             _FormsInfo[index].TextWidth = TextRenderer.MeasureText(f.Text, Font).Width;
         }
 
-        private void Value_TextChanged(object sender, EventArgs e)
+        private void DockBarForm_TextChanged(object sender, EventArgs e)
         {
             UpdateFormSize(sender as Form);
         }
-
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
@@ -145,7 +181,7 @@ namespace DockBarControl
                 if (CurrentForm != null)
                     CurrentForm.Hide();
                 CurrentFormIndex = _MouseOverFormIndex;
-                CurrentForm = _FormsInfo[CurrentFormIndex].Form;
+                CurrentForm = _FormsInfo[CurrentFormIndex].Form;                
                 CurrentForm.StartPosition = FormStartPosition.Manual;
                 CurrentForm.Width = DefaultWindowWidth;
                 //Point p = PointToScreen(new Point(-5, 1));// NeedCheck
@@ -153,6 +189,7 @@ namespace DockBarControl
                 CurrentForm.Height = Height;
                 CurrentForm.Left = p.X + Width;
                 CurrentForm.Top = p.Y;
+                _CurrentFormMoving = false;
                 CurrentForm.Show(ParentForm);
             }
         }

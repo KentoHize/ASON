@@ -25,14 +25,6 @@ namespace DockBarControl
         public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
         {
             return UITypeEditorEditStyle.None;
-        }
-
-        //public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
-        //{
-
-        //    return UITypeEditorEditStyle.DropDown;
-        //    //return UITypeEditorEditStyle.None; // disallow edit (hide the small browser button)            
-        //    //return base.GetEditStyle(context);
-        //}
+        }      
     }
 }
