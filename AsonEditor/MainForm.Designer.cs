@@ -83,8 +83,8 @@ namespace AsonEditor
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.dockBar1 = new DockBarControl.DockBar();
             this.button1 = new System.Windows.Forms.Button();
+            this.dockBar1 = new Aritiafel.Organizations.ElibrarPartFactory.DockBar();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -533,20 +533,6 @@ namespace AsonEditor
             this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // dockBar1
-            // 
-            this.dockBar1.BarColor = System.Drawing.SystemColors.ControlLight;
-            this.dockBar1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dockBar1.Location = new System.Drawing.Point(798, 55);
-            this.dockBar1.Margin = new System.Windows.Forms.Padding(3, 1736872, 3, 1736872);
-            this.dockBar1.MouseOverColor = System.Drawing.SystemColors.MenuHighlight;
-            this.dockBar1.Name = "dockBar1";
-            this.dockBar1.Size = new System.Drawing.Size(45, 477);
-            this.dockBar1.TabIndex = 4;
-            this.dockBar1.WindowCaptionBackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.dockBar1.WindowCaptionForeColor = System.Drawing.Color.White;
-            this.dockBar1.WindowCaptionHeight = 20;
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(453, 196);
@@ -557,12 +543,24 @@ namespace AsonEditor
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // dockBar1
+            // 
+            this.dockBar1.BarColor = System.Drawing.SystemColors.ControlLight;
+            this.dockBar1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dockBar1.ItemInterval = 5;
+            this.dockBar1.Location = new System.Drawing.Point(0, 55);
+            this.dockBar1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dockBar1.MouseOverColor = System.Drawing.SystemColors.MenuHighlight;
+            this.dockBar1.Name = "dockBar1";
+            this.dockBar1.Size = new System.Drawing.Size(30, 477);
+            this.dockBar1.TabIndex = 8;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(843, 558);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.dockBar1);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.menuStrip);
@@ -637,8 +635,8 @@ namespace AsonEditor
         private System.Windows.Forms.ToolStripButton printPreviewToolStripButton;
         private System.Windows.Forms.ToolStripButton helpToolStripButton;
         private System.Windows.Forms.ToolTip toolTip;
-        private DockBarControl.DockBar dockBar1;
         private System.Windows.Forms.Button button1;
+        private Aritiafel.Organizations.ElibrarPartFactory.DockBar dockBar1;
     }
 }
 

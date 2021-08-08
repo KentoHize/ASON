@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aritiafel.Organizations.ElibrarPartFactory;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,15 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DockBarControl;
 
 namespace AsonEditor
 {
-    public partial class TreeNodeMapForm : Form
+    public partial class TreenodeMapForm : DockableWindow
     {
-        public TreeNodeMapForm()
+        public TreenodeMapForm()
         {
             InitializeComponent();
-        }      
+        }
     }
 }

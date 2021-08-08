@@ -1,7 +1,7 @@
 ﻿
 namespace AsonEditor
 {
-    partial class TreeNodeMapForm
+    partial class TreenodeMapForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,45 +30,47 @@ namespace AsonEditor
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
+            // 
+            // CloseButton
+            // 
+            this.CloseButton.FlatAppearance.BorderSize = 0;
+            // 
+            // FloatButton
+            // 
+            this.FloatButton.FlatAppearance.BorderSize = 0;
+            // 
+            // AutoHideButton
+            // 
+            this.AutoHideButton.FlatAppearance.BorderSize = 0;
+            // 
+            // _PaintingForm
+            // 
+            this._PaintingForm.ClientSize = new System.Drawing.Size(300, 300);
             // 
             // button1
             // 
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button1.Location = new System.Drawing.Point(12, 40);
+            this.button1.Location = new System.Drawing.Point(174, 138);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(131, 25);
+            this.button1.Size = new System.Drawing.Size(192, 79);
             this.button1.TabIndex = 0;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // TreenodeMapForm
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 12);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(147, 22);
-            this.textBox1.TabIndex = 1;
-            // 
-            // TreeNodeMapForm
-            // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(408, 277);
-            this.ControlBox = false;
-            this.Controls.Add(this.textBox1);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.button1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Name = "TreeNodeMapForm";
-            this.Text = "TreeNodeMapForm";
+            this.Name = "TreenodeMapForm";
+            this.Text = "TreenodeForm1";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }

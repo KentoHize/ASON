@@ -17,9 +17,9 @@ namespace AsonEditor
         public MainForm()
         {
             InitializeComponent();
-            dockBar1.AddForm(new TreeNodeMapForm { Text = "Treenode Map" });
-            dockBar1.AddForm(new TreeNodeMapForm { Text = "Server Explorer" });
-            dockBar1.AddForm(new TreeNodeMapForm { Text = "Object Editor" });
+            dockBar1.AddWindow(new TreenodeMapForm { Text = "Treenode Map" });
+            dockBar1.AddWindow(new TreenodeMapForm { Text = "Server Explorer" });
+            dockBar1.AddWindow(new TreenodeMapForm { Text = "Object Editor" });
             //dbrLeft.Forms
             //    .Add(new TreeNodeMapForm());
         }
@@ -115,7 +115,7 @@ namespace AsonEditor
             {
                 case DockStyle.Left:
                     dockBar1.Dock = DockStyle.Top;
-                    dockBar1.Height = 30;                    
+                    dockBar1.Height = 30;
                     break;
                 case DockStyle.Top:
                     dockBar1.Dock = DockStyle.Right;

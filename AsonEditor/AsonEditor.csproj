@@ -36,6 +36,9 @@
     <Reference Include="Aritiafel, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Aritiafel.1.0.2\lib\netstandard2.0\Aritiafel.dll</HintPath>
     </Reference>
+    <Reference Include="Aritiafel.Organizations.ElibrarPartFactory">
+      <HintPath>..\..\..\WinForm\Elibrar\DockableWindow\bin\Release\Aritiafel.Organizations.ElibrarPartFactory.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -91,11 +94,11 @@
     <Compile Include="TestClass\Person.cs" />
     <Compile Include="TestClass\Pet.cs" />
     <Compile Include="TestClass\SampleCreator.cs" />
-    <Compile Include="TreeNodeMapForm.cs">
+    <Compile Include="TreenodeMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TreeNodeMapForm.Designer.cs">
-      <DependentUpon>TreeNodeMapForm.cs</DependentUpon>
+    <Compile Include="TreenodeMapForm.Designer.cs">
+      <DependentUpon>TreenodeMapForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -109,8 +112,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="TreeNodeMapForm.resx">
-      <DependentUpon>TreeNodeMapForm.cs</DependentUpon>
+    <EmbeddedResource Include="TreenodeMapForm.resx">
+      <DependentUpon>TreenodeMapForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -125,12 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DockBar\DockBarControl.csproj">
-      <Project>{cbe792cf-e88b-47af-8ae9-342811930516}</Project>
-      <Name>DockBarControl</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
