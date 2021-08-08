@@ -17,5 +17,10 @@ namespace AsonEditor
         {
             InitializeComponent();
         }
+
+        public void TestShow(List<object> items)
+        {
+
+        }
     }
 }
