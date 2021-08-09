@@ -101,6 +101,12 @@
     <Compile Include="TreenodeMapForm.Designer.cs">
       <DependentUpon>TreenodeMapForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TypeLibraryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TypeLibraryForm.Designer.cs">
+      <DependentUpon>TypeLibraryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Var.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -116,6 +122,9 @@
     </Compile>
     <EmbeddedResource Include="TreenodeMapForm.resx">
       <DependentUpon>TreenodeMapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TypeLibraryForm.resx">
+      <DependentUpon>TypeLibraryForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
