@@ -1,0 +1,56 @@
+﻿Type.ason:
+XXXXX(TypeName):
+{
+	XX(PropertyName) : { "XXX"(TypeName), (Key)/(Nullable)/(Min:10)/(FKFile:XXX)/(FKColumn:XXX)/ },
+	XX(PropertyName) : { },
+	XX(PropertyName) : { "XXX"(TypeName) }
+}
+
+XXXX(TypeName):
+{
+	XX : { (TypeName), (Property Label) }
+}
+
+Property Label:(Key)/(Nullable)/(RegularExpression:"XXXX")/(Min:i)/(Max:i)/(MaxLength:i)/
+(FKFile:XXX)/(FKColumn:XXX)/(NumberOfRows:i)/(Display)/(Description:"XXXXX")/
+(AutoGenerateKey)/(Unique)/Choices:[XX, XX]
+
+Sample:
+Type.ason:
+Person:
+{
+	ID: { Char(2), Key },
+	Name: { Char(10) },
+	Gender: { Choice, ["F", "M"], }
+	Cash: { Int, Min:10 }
+	Friends: { "Person[]" }
+}
+
+Persons.ason:
+Person[]:
+[
+	{
+		01,
+		Acton,
+		M,
+		5000
+		[ 02, 03 ]
+	},
+	{
+		02,
+		Alma,
+		F,
+		3000,
+		[ 01 ]
+	},
+	{
+		03,
+		Barrick,
+		M,
+		2000,
+		[ 03 ]
+	}
+]
+
+
+

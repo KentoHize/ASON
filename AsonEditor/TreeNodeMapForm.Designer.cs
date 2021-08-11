@@ -44,6 +44,10 @@ namespace AsonEditor
             // 
             this.AutoHideButton.FlatAppearance.BorderSize = 0;
             // 
+            // _PaintingForm
+            // 
+            this._PaintingForm.ClientSize = new System.Drawing.Size(300, 300);
+            // 
             // treeView1
             // 
             this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -56,8 +60,7 @@ namespace AsonEditor
             // 
             // TreenodeMapForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 780);
             this.Controls.Add(this.treeView1);
             this.Name = "TreenodeMapForm";

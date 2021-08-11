@@ -10,7 +10,7 @@ namespace ArinaStandardObjectNotation
         public ArType Type { get; set; }
         public bool IsKey { get; set; }
         public bool IsNullable { get; set; }
-        List<string> Choices { get; set; }
+        List<object> Choices { get; set; }
         public string RegularExpression { get; set; }
         public string Description { get; set; }
         public string MinValue { get; set; }
