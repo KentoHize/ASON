@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Aritiafel.Artifacts</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="TestData\Save\" />
+  </ItemGroup>
 
 </Project>

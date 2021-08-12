@@ -1,0 +1,21 @@
+﻿Person[] Persons
+[	
+	{
+		"01",
+		"Acton",
+		"M",
+		05-03-1881,
+		"Adress of Acton",
+		[ Persons[1], Persons[2] ],
+		[ Pets[0], Pets[2] ]
+	},
+	{
+		"02",
+		"Alma",
+		"F",
+		"01-07-1990",
+		"Adress of Alma",
+		[ Persons[0] ],
+		[ ]
+	}
+]

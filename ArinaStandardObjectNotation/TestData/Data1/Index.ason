@@ -1,0 +1,32 @@
+﻿Creature
+{
+	ID { Char(10) },
+	Name { Char(20) },
+	Gender { Choice, Choices(["F", "M"]) },
+	Birthday { Date, Min("12-20-1981") },
+}
+
+Pet : Creature
+{
+	IsLazy { Bool },
+}
+
+Dog : Pet
+{
+	Breed { Char(10), Default("aaa") }
+	IsOmnivores { Bool },
+	Sleepy { Bool }
+}
+
+Cat : Pet
+{
+	Breed { Char(10) }
+    HateDogs { Bool }
+}
+
+Person : Creature
+{	
+	Address { String }
+	Friends { Person[] }
+	Pets { Pet[] }
+}

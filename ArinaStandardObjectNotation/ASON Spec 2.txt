@@ -1,9 +1,32 @@
 ﻿ASON 1.0
+Basic Type:
+Value Type
+Bool
+Byte
+Short
+Int
+Long
+Decimal
+LongDecimal
+
+Char
+Date
+Time
+DateTime
+
+Reference Type
+Number
+String
+Object
+
 
 Property Label:
 Key/Nullable/RegularExpression(XXXX)/Min(i)/Max(i)/MaxLength(i)/
 FK(ArrayName, PropertyName)/NumberOfRows(i)/Display/Description(XXXXX)/
 AutoGenerateKey/Unique/Choices(["XX", "XX"])/Default(XXX)
+
+Functions:
+NOW()
 
 
 Type.ason:
@@ -22,9 +45,15 @@ Pet : Creature
 
 Dog : Pet
 {
-	Breed { Char(10) }
+	Breed { Char(10), Default("aaa") }
 	IsOmnivores { Bool },
 	Sleepy { Bool }
+}
+
+Cat : Pet
+{
+	Breed { Char(10) }
+    HateDogs { Bool }
 }
 
 Person : Creature
@@ -42,10 +71,19 @@ Person[] Persons
 		"Acton",
 		"M",
 		05-03-1881,
-		"ADdd dsa dfsfds",
+		"Adress of Acton",
 		[ Persons[1], Persons[2] ],
 		[ Pets[0], Pets[2] ]
-	},	
+	},
+	{
+		"02",
+		"Alma",
+		"F",
+		"01-07-1990",
+		"Adress of Alma",
+		[ Persons[0] ],
+		[ ]
+	}
 ]
 
 Person Tom
@@ -58,3 +96,28 @@ Person Tom
 	[ { "03"....... } ],
 	[]
 }
+
+Pet.ason
+Pet[] Pets
+[
+	Dog {
+		"D01",
+		"Bob",
+		"M",
+		"11-12-1988",
+		T,
+		"Centries",
+		T,
+		F
+	},
+
+	Cat {
+		"C01",
+		"Bob",
+		"M",
+		"11-12-1988",
+		T,
+		"Undefined",
+		T
+	}
+]

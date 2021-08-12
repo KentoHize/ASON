@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ArinaStandardObjectNotation
+namespace Aritiafel.Artifacts
 {
     public class ArProperty
     {

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ArinaStandardObjectNotation
+namespace Aritiafel.Artifacts
 {
     public class ArObject : IList<object>
     {

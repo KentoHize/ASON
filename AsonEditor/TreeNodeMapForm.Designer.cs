@@ -44,10 +44,6 @@ namespace AsonEditor
             // 
             this.AutoHideButton.FlatAppearance.BorderSize = 0;
             // 
-            // _PaintingForm
-            // 
-            this._PaintingForm.ClientSize = new System.Drawing.Size(300, 300);
-            // 
             // treeView1
             // 
             this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
