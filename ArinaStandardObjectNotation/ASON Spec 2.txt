@@ -1,0 +1,60 @@
+﻿ASON 1.0
+
+Property Label:
+Key/Nullable/RegularExpression(XXXX)/Min(i)/Max(i)/MaxLength(i)/
+FK(ArrayName, PropertyName)/NumberOfRows(i)/Display/Description(XXXXX)/
+AutoGenerateKey/Unique/Choices(["XX", "XX"])/Default(XXX)
+
+
+Type.ason:
+Creature
+{
+	ID { Char(10) },
+	Name { Char(20) },
+	Gender { Choice, Choices(["F", "M"]) },
+	Birthday { Date, Min("12-20-1981") },
+}
+
+Pet : Creature
+{
+	IsLazy { Bool },
+}
+
+Dog : Pet
+{
+	Breed { Char(10) }
+	IsOmnivores { Bool },
+	Sleepy { Bool }
+}
+
+Person : Creature
+{	
+	Address { String }
+	Friends { Person[] }
+	Pets { Pet[] }
+}
+
+Person.ason
+Person[] Persons
+[	
+	{
+		"01",
+		"Acton",
+		"M",
+		05-03-1881,
+		"ADdd dsa dfsfds",
+		[ Persons[1], Persons[2] ],
+		[ Pets[0], Pets[2] ]
+	},	
+]
+
+Person Tom
+{
+	"02",
+	"Tom",
+	"M",
+	03-03-1992,
+	"adsa adsda dasdsa"
+	[ { "03"....... } ],
+	[]
+}

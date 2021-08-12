@@ -29,21 +29,21 @@ Person:
 Persons.ason:
 Person[]:
 [
-	{
+	01: {
 		01,
 		Acton,
 		M,
 		5000
 		[ 02, 03 ]
 	},
-	{
+	02: {
 		02,
 		Alma,
 		F,
 		3000,
 		[ 01 ]
 	},
-	{
+	03: {
 		03,
 		Barrick,
 		M,
