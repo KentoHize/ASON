@@ -1,32 +1,39 @@
-﻿Creature
-{
-	ID { Char(10) },
-	Name { Char(20) },
-	Gender { Choice, Choices(["F", "M"]) },
-	Birthday { Date, Min("12-20-1981") },
-}
-
-Pet : Creature
-{
-	IsLazy { Bool },
-}
-
-Dog : Pet
-{
-	Breed { Char(10), Default("aaa") }
-	IsOmnivores { Bool },
-	Sleepy { Bool }
-}
-
-Cat : Pet
-{
-	Breed { Char(10) }
-    HateDogs { Bool }
-}
-
-Person : Creature
+﻿abstract Creature
 {	
-	Address { String }
-	Friends { Person[] }
-	Pets { Pet[] }
+	char[10] ID
+	char[20] Name
+	choice Gender { Choices(["F", "M"]) }
+	date Birthday { Min("12-20-1981") }	
+}
+
+type Pet : Creature
+{
+	bool IsLazy
+	private string SpecialRace
+}
+
+type Dog : Pet
+{
+	char[10] Breed { Default("aaa") }
+	bool IsOmnivores
+	bool Sleepy
+}
+
+type Cat : Pet
+{
+	char[10] Breed
+    bool HateDogs
+}
+
+type Person : Creature
+{	
+	string Address
+	Person[] Friends
+	Pet[] Pets
+}
+
+root 
+{
+	Persons,
+	Pets 
 }

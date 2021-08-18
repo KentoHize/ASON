@@ -7,7 +7,7 @@
 		05-03-1881,
 		"Adress of Acton",
 		[ Persons[1], Persons[2] ],
-		[ Pets[0], Pets[2] ]
+		[ Pets[0], Pets[1] ]
 	},
 	{
 		"02",

@@ -15,12 +15,12 @@ namespace AsonEditor.TestClass
         Asexual
     }
 
-    public class Creature
+    public abstract class Creature
     {
         public string ID { get; set; }
         public string Name { get; set; }
         public Gender Gender {get; set;}
-        public DateTime Birthday { get; set; }
+        public DateTime Birthday { get; set; }        
         public Creature()
             : this("")
         { }

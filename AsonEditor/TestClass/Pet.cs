@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace AsonEditor.TestClass
 {
-    public abstract class Pet : Creature
+    public class Pet : Creature
     {
         public bool IsLazy { get; set; }
+        private string SpecialRace { get; set; }
+
         public Pet()
             : this(false)
         { }
